@@ -1,5 +1,6 @@
 package ru.hse.reversi.commands;
 
+import ru.hse.reversi.game.Observer;
 import ru.hse.reversi.game.Reversi;
 
 public interface CommandHandler {
@@ -28,4 +29,8 @@ public interface CommandHandler {
     default Command falseCommand() {
         return Command.FALSE;
     }
+
+    public String getMove(Observer observer);
+
+    public int getGameMode();
 }
