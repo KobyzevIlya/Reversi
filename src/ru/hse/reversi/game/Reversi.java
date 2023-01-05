@@ -5,10 +5,6 @@ import ru.hse.reversi.field.CharMatrix;
 import java.util.Deque;
 
 public class Reversi extends TwoPlayerGame {
-    public static final char BLACK = '#';
-    public static final char WHITE = '*';
-    public static final char SPACE = '_';
-
     private final Deque<CharMatrix> fields = null;
     private int gameMode;
 
