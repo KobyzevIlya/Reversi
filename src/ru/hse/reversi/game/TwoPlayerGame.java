@@ -21,6 +21,10 @@ public abstract class TwoPlayerGame {
         gameStarted = false;
     }
 
+    public void setGameStarted() {
+        gameStarted = true;
+    }
+
     public int getBestScore() {
         return bestScore;
     }
