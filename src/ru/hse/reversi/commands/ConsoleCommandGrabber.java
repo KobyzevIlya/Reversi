@@ -6,35 +6,28 @@ import ru.hse.reversi.console.ConsolePrinter;
 
 import java.util.Scanner;
 
-public class ConsoleCommandGrabber implements CommandHandler {
+public class ConsoleCommandGrabber implements CommandGrabber {
     @Override
-    public Command getCommand(Reversi game) {
+    public Command getCommand() {
         Scanner scanner = new Scanner(System.in);
 
         String command = scanner.nextLine();
 
         switch (command) {
             case "/s" -> {
-                game.setGameNotStarted();
                 startCommand();
             }
             case "/e" -> {
                 exitCommand();
             }
             case "/m" -> {
-                if (game.isGameStarted()) {
-                    moveCommand();
-                }
+                moveCommand();
             }
             case "/p" -> {
-                if (game.isGameStarted()) {
-                    scoreCommand();
-                }
+                scoreCommand();
             }
             case "/b" -> {
-                if (game.isGameStarted() && !game.isFirstMove()) {
-                    backCommand();
-                }
+                backCommand();
             }
         }
 
@@ -43,7 +36,7 @@ public class ConsoleCommandGrabber implements CommandHandler {
 
     @Override
     public String getMove(Observer observer) {
-        //ConsolePrinter.printPositions(observer); todo
+        ConsolePrinter.printPositions(observer);
 
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();

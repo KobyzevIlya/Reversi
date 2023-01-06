@@ -60,7 +60,7 @@ public final class ConsolePrinter {
     }
 
 
-    /* todo
+
     public static void printPositions(Observer observer) {
         System.out.print("->Enter position. To exit print 0\n");
 
@@ -76,19 +76,12 @@ public final class ConsolePrinter {
 
     public static void printScore(Observer observer) {
         IntegerPair score = observer.getScore();
-        System.out.print("\n->" + Reversi.BLACK + " score: " + score.getFirst() + ", " + Reversi.WHITE + " score: " + score.getSecond() + "\n");
-
-        if (observer.isEndOfGame()) {
-            if (Reversi.getBestScore() < observer.getScore().getFirst()) {
-                Reversi.setBestScore(observer.getScore().getFirst());
-            }
-            if (Reversi.getGameMode() == 1 && Reversi.getBestScore() < observer.getScore().getSecond()) {
-                Reversi.setBestScore(observer.getScore().getSecond());
-            }
-            System.out.print("->Best score of all games: " + Reversi.getBestScore() + "\n");
-        }
+        System.out.print("\n->" + FiledSymbols.BLACK + " score: " + score.getFirst() + ", " + FiledSymbols.WHITE + " score: " + score.getSecond() + "\n");
     }
-    */
+
+    public static void printBestScore(Reversi game) {
+        System.out.print("->Best score of all games: " + game.getBestScore() + "\n");
+    }
 
     public static void printEnd() {
         System.out.print("->This is end of game\n");
