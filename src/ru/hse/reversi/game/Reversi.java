@@ -81,11 +81,11 @@ public class Reversi extends TwoPlayerGame {
                     gameMode = commandGrabber.getGameMode();
                     switch (gameMode) {
                         case 1 -> {
-                            blackPlayer = new Human();
-                            whitePlayer = new Human();
+                            blackPlayer = new Human(commandGrabber);
+                            whitePlayer = new Human(commandGrabber);
                         }
                         case 2, 3 -> {
-                            blackPlayer = new Human();
+                            blackPlayer = new Human(commandGrabber);
                             whitePlayer = new Computer();
                         }
                         case 0 -> {

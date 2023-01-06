@@ -15,19 +15,19 @@ public class ConsoleCommandGrabber implements CommandGrabber {
 
         switch (command) {
             case "/s" -> {
-                startCommand();
+                return startCommand();
             }
             case "/e" -> {
-                exitCommand();
+                return exitCommand();
             }
             case "/m" -> {
-                moveCommand();
+                return moveCommand();
             }
             case "/p" -> {
-                scoreCommand();
+                return scoreCommand();
             }
             case "/b" -> {
-                backCommand();
+                return backCommand();
             }
         }
 
