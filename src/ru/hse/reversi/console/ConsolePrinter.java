@@ -1,9 +1,9 @@
 package ru.hse.reversi.console;
 
+import ru.hse.reversi.field.Field;
 import ru.hse.reversi.game.Observer;
 import ru.hse.reversi.game.Reversi;
 import ru.hse.reversi.utility.FiledSymbols;
-import ru.hse.reversi.field.Field;
 import ru.hse.reversi.utility.IntegerPair;
 
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ public final class ConsolePrinter {
         System.out.print("->This is end of game\n");
     }
 
-    public static void printMoveLetter(char move) {
+    public static void printChosenLetter(char move) {
         System.out.print("\n->move " + move + " was chosen\n");
     }
 

@@ -21,4 +21,5 @@ public interface MessageHandler {
 
     void invalidCommand();
 
+    void chosenLetter(char letter);
 }

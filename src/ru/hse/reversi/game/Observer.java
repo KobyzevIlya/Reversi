@@ -19,7 +19,7 @@ public class Observer {
     private int whiteScore = 0;
     private int freeCells = 0;
 
-    Observer(Field field, boolean turn) {
+    public Observer(Field field, boolean turn) {
         possibleMoves = new ArrayList<>();
         blackOrWhite = new HashMap<>();
         blackOrWhite.put(FiledSymbols.BLACK, true);

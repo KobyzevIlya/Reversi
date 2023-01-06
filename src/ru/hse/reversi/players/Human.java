@@ -1,18 +1,20 @@
 package ru.hse.reversi.players;
 
 import ru.hse.reversi.commands.CommandGrabber;
-import ru.hse.reversi.console.ConsolePrinter;
 import ru.hse.reversi.game.Observer;
+import ru.hse.reversi.messages.MessageHandler;
 import ru.hse.reversi.utility.IntegerPair;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human implements Player{
-    private CommandGrabber commandGrabber;
+public class Human implements Player {
+    private final CommandGrabber commandGrabber;
+    private final MessageHandler messageHandler;
 
-    public Human(CommandGrabber commandGrabber) {
+    public Human(CommandGrabber commandGrabber, MessageHandler messageHandler) {
         this.commandGrabber = commandGrabber;
+        this.messageHandler = messageHandler;
     }
 
     @Override
@@ -26,7 +28,7 @@ public class Human implements Player{
                     return new IntegerPair(-1, -1);
                 }
                 case 1 -> {
-                    ConsolePrinter.printMoveLetter(move.charAt(0)); //todo in MessageHandler
+                    messageHandler.chosenLetter(move.charAt(0));
                     return possibleMoves.get(move.charAt(0) - '0' - 49);
                 }
                 case 0 -> {

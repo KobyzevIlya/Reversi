@@ -47,4 +47,9 @@ public class ConsoleMessageHandler implements MessageHandler{
     public void invalidCommand() {
         ConsolePrinter.printInvalidCommand();
     }
+
+    @Override
+    public void chosenLetter(char letter) {
+        ConsolePrinter.printChosenLetter(letter);
+    }
 }
