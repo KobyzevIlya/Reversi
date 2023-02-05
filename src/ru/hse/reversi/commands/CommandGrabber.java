@@ -1,7 +1,6 @@
 package ru.hse.reversi.commands;
 
 import ru.hse.reversi.game.Observer;
-import ru.hse.reversi.game.Reversi;
 
 public interface CommandGrabber {
     Command getCommand();
@@ -30,7 +29,7 @@ public interface CommandGrabber {
         return Command.FALSE;
     }
 
-    public String getMove(Observer observer);
+    String getMove(Observer observer);
 
-    public int getGameMode();
+    int getGameMode();
 }

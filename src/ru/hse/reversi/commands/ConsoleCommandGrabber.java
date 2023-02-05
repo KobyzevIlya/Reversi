@@ -1,7 +1,6 @@
 package ru.hse.reversi.commands;
 
 import ru.hse.reversi.game.Observer;
-import ru.hse.reversi.game.Reversi;
 import ru.hse.reversi.console.ConsolePrinter;
 
 import java.util.Scanner;
