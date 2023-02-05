@@ -102,6 +102,7 @@ public class Reversi extends TwoPlayerGame {
                 }
 
                 messageHandler.gameEnd(observer, this);
+                messageHandler.showField(field);
 
                 setGameNotStarted();
 

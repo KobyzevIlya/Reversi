@@ -85,7 +85,7 @@ public final class ConsolePrinter {
     }
 
     public static void printEnd() {
-        System.out.print("->This is end of game\n");
+        System.out.print("->This is end of the game\n");
     }
 
     public static void printChosenLetter(char move) {
