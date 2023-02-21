@@ -1,17 +1,13 @@
 package ru.hse.reversi.commands;
 
+import ru.hse.reversi.console.ConsoleReader;
 import ru.hse.reversi.game.Observer;
-import ru.hse.reversi.game.Reversi;
 import ru.hse.reversi.console.ConsolePrinter;
-
-import java.util.Scanner;
 
 public class ConsoleCommandGrabber implements CommandGrabber {
     @Override
     public Command getCommand() {
-        Scanner scanner = new Scanner(System.in);
-
-        String command = scanner.nextLine();
+        String command = ConsoleReader.getCommand();
 
         switch (command) {
             case "/s" -> {
@@ -38,19 +34,15 @@ public class ConsoleCommandGrabber implements CommandGrabber {
     public String getMove(Observer observer) {
         ConsolePrinter.printPositions(observer);
 
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
+        return ConsoleReader.getCommand();
     }
 
     @Override
     public int getGameMode() {
-        Scanner scanner = new Scanner(System.in);
-        String command;
-
         ConsolePrinter.printModeInfo();
 
         while (true) {
-            command = scanner.nextLine();
+            String command = ConsoleReader.getCommand();
             switch (command) {
                 case "1" -> {
                     return 1;

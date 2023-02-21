@@ -13,7 +13,11 @@ public interface MessageHandler {
 
     void turnInfo(Reversi game);
 
-    void info(Reversi game);
+    void startExitInfo();
+
+    void commandsInfo();
+
+    void backInfo();
 
     void score(Observer observer);
 

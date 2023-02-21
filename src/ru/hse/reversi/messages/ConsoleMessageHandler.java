@@ -29,8 +29,18 @@ public class ConsoleMessageHandler implements MessageHandler{
     }
 
     @Override
-    public void info(Reversi game) {
-        ConsolePrinter.printInfo(game);
+    public void startExitInfo() {
+        ConsolePrinter.printStartExitInfo();
+    }
+
+    @Override
+    public void commandsInfo() {
+        ConsolePrinter.printCommandsInfo();
+    }
+
+    @Override
+    public void backInfo() {
+        ConsolePrinter.printBackInfo();
     }
 
     @Override

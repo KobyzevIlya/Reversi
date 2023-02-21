@@ -12,22 +12,24 @@ public final class ConsolePrinter {
     private ConsolePrinter() {
     }
 
-    public static void printInfo(Reversi game) {
+    public static void printStartExitInfo() {
         System.out.print("""
                 ->/s - start new game
                 ->/e - exit
                 """);
-        if (game.isGameStarted()) {
-            System.out.print("""
-                    ->/m - choose position to move
-                    ->/p - view score
-                    """);
-            if (!game.isFirstMove()) {
-                System.out.print("""
-                        ->/b - go to previous move
-                        """);
-            }
-        }
+    }
+
+    public static void printCommandsInfo() {
+        System.out.print("""
+                ->/m - choose position to move
+                ->/p - view score
+                """);
+    }
+
+    public static void printBackInfo() {
+        System.out.print("""
+                ->/b - go to previous move
+                """);
     }
 
     public static void printTurnInfo(Reversi game) {
@@ -60,7 +62,6 @@ public final class ConsolePrinter {
     }
 
 
-
     public static void printPositions(Observer observer) {
         System.out.print("->Enter position. To exit print 0\n");
 
@@ -84,14 +85,10 @@ public final class ConsolePrinter {
     }
 
     public static void printEnd() {
-        System.out.print("->This is end of game\n");
+        System.out.print("->This is end of the game\n");
     }
 
     public static void printChosenLetter(char move) {
         System.out.print("\n->move " + move + " was chosen\n");
-    }
-
-    public static void printSomethingWrong() {
-        System.out.print("\n->Something went wrong... Don't do this in the future\n");
     }
 }

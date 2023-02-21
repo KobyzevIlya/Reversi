@@ -21,8 +21,8 @@ public class Reversi extends TwoPlayerGame {
     private int gameMode;
     private Field field;
     private Observer observer;
-    private CommandGrabber commandGrabber;
-    private MessageHandler messageHandler;
+    private final CommandGrabber commandGrabber; // mb not final?
+    private final MessageHandler messageHandler;
 
     private Player blackPlayer;
     private Player whitePlayer;
@@ -34,74 +34,37 @@ public class Reversi extends TwoPlayerGame {
 
     public void startGame() {
         Command command = null;
-        do {
-            if (isGameStarted()) {
-                observer = new Observer(field, getTurn());
-
-                if (observer.isEndOfGame()) {
-                    if (getBestScore() < observer.getScore().getFirst()) {
-                        setBestScore(observer.getScore().getFirst());
-                    }
-                    if (getGameMode() == 1 && getBestScore() < observer.getScore().getSecond()) {
-                        setBestScore(observer.getScore().getSecond());
-                    }
-
-                    messageHandler.gameEnd(observer, this);
-
-                    setGameNotStarted();
-
-                    continue;
-                }
-
-                if (observer.getPossibleMoves().isEmpty()) {
-                    messageHandler.skipTurn(getTurn());
-                    setTurn(!turn);
-
-                    continue;
-                }
-
-                messageHandler.showField(Observer.addMovesToField(observer.getPossibleMoves(), field));
-                messageHandler.turnInfo(this);
+        while (command != Command.EXIT) {
+            if (initializeGame()) {
+                continue;
             }
 
-            messageHandler.info(this);
+            info();
 
-            if (getGameMode() == 1 || getTurn() || !isGameStarted()) {
+            if (!isGameStarted()) {
+                command = commandGrabber.getCommand();
+
+                if (command == Command.EXIT) {
+                    continue;
+                }
+
+                if (initializeVariables()) {
+                    setGameStarted();
+                } else {
+                    continue;
+                }
+            }
+
+            if (doMove(observer, field, blackPlayer, whitePlayer)) {
+                command = Command.MOVE;
+                continue;
+            } else {
+                info();
                 command = commandGrabber.getCommand();
             }
 
-            if (command == null) {
-                command = Command.START;
-            }
-
             switch (command) {
-                case START -> {
-                    setGameNotStarted();
-
-                    gameMode = commandGrabber.getGameMode();
-                    switch (gameMode) {
-                        case 1 -> {
-                            blackPlayer = new Human(commandGrabber, messageHandler);
-                            whitePlayer = new Human(commandGrabber, messageHandler);
-                        }
-                        case 2, 3 -> {
-                            blackPlayer = new Human(commandGrabber, messageHandler);
-                            whitePlayer = new Computer(getGameMode(), commandGrabber, messageHandler, this);
-                        }
-                        case 0 -> {
-                            continue;
-                        }
-                    }
-
-                    field = new Field();
-                    observer = new Observer(field, getTurn());
-                    fields = new ArrayDeque<>();
-                    setGameStarted();
-                    setTurn(true);
-                }
-                case MOVE -> {
-                    doMove(observer, field, blackPlayer, whitePlayer);
-                }
+                case START -> initializeVariables();
                 case SCORE -> {
                     if (!isGameStarted()) {
                         messageHandler.invalidCommand();
@@ -119,14 +82,66 @@ public class Reversi extends TwoPlayerGame {
                     }
                     goPreviousTurn(field);
                 }
-                case FALSE -> {
-                    messageHandler.invalidCommand();
-                }
-                case EXIT -> {
-
+                case FALSE -> messageHandler.invalidCommand();
+                case MOVE, EXIT -> {
                 }
             }
-        } while (command != Command.EXIT);
+        }
+    }
+
+    private boolean initializeGame() {
+        if (isGameStarted()) {
+            observer = new Observer(field, getTurn());
+
+            if (observer.isEndOfGame()) {
+                if (getBestScore() < observer.getScore().getFirst()) {
+                    setBestScore(observer.getScore().getFirst());
+                }
+                if (getGameMode() == 1 && getBestScore() < observer.getScore().getSecond()) {
+                    setBestScore(observer.getScore().getSecond());
+                }
+
+                messageHandler.gameEnd(observer, this);
+                messageHandler.showField(field);
+
+                setGameNotStarted();
+
+                return true;
+            }
+
+            if (observer.getPossibleMoves().isEmpty()) {
+                messageHandler.skipTurn(getTurn());
+                setTurn(!turn);
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean initializeVariables() {
+        gameMode = commandGrabber.getGameMode();
+        switch (gameMode) {
+            case 1 -> {
+                blackPlayer = new Human(commandGrabber, messageHandler);
+                whitePlayer = new Human(commandGrabber, messageHandler);
+            }
+            case 2, 3 -> {
+                blackPlayer = new Human(commandGrabber, messageHandler);
+                whitePlayer = new Computer(getGameMode(), commandGrabber, messageHandler, this);
+            }
+            case 0 -> {
+                return false;
+            }
+        }
+
+        field = new Field();
+        observer = new Observer(field, getTurn());
+        fields = new ArrayDeque<>();
+        setTurn(true);
+
+        return true;
     }
 
     public boolean isFirstMove() {
@@ -137,7 +152,10 @@ public class Reversi extends TwoPlayerGame {
         return gameMode;
     }
 
-    private void doMove(Observer observer, Field field, Player blackPlayer, Player whitePlayer) {
+    private boolean doMove(Observer observer, Field field, Player blackPlayer, Player whitePlayer) {
+        messageHandler.showField(Observer.addMovesToField(observer.getPossibleMoves(), field));
+        messageHandler.turnInfo(this);
+
         fields.push(field.getField());
 
         Player currentPlayer = getTurn() ? blackPlayer : whitePlayer;
@@ -145,13 +163,14 @@ public class Reversi extends TwoPlayerGame {
 
         if (move.getFirst() == -1 && move.getSecond() == -1) {
             fields.pop();
-            return;
+            return false;
         }
 
         field.setCell(move, getTurn() ? FiledSymbols.BLACK : FiledSymbols.WHITE);
         observer.changeField(move, field);
 
         setTurn(!turn);
+        return true;
     }
 
     private void goPreviousTurn(Field field) {
@@ -161,6 +180,16 @@ public class Reversi extends TwoPlayerGame {
         if (getGameMode() == 2 || getGameMode() == 3) {
             field.setField(fields.pop());
             setTurn(!turn);
+        }
+    }
+
+    private void info() {
+        messageHandler.startExitInfo();
+        if (isGameStarted()) {
+            messageHandler.commandsInfo();
+            if (!isFirstMove()) {
+                messageHandler.backInfo();
+            }
         }
     }
 }
