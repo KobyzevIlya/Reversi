@@ -7,6 +7,9 @@ public class ConsoleReader {
 
     public static String getCommand() {
         Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
+        String command = scanner.nextLine();
+        scanner.close();
+
+        return command;
     }
 }
