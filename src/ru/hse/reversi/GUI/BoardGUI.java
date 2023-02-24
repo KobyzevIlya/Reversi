@@ -13,6 +13,7 @@ public class BoardGUI extends JFrame {
         Dimension dimension = toolkit.getScreenSize();
         setBounds(dimension.width / 2 - 250, dimension.height / 2 - 350, 600, 600);
         setLayout(new BorderLayout());
+        setResizable(false);
 
         // create a board
         JPanel board = new JPanel(new GridLayout(8, 8));
@@ -45,7 +46,7 @@ public class BoardGUI extends JFrame {
         JPanel rankLabelsPanel = new JPanel(new GridLayout(8, 1));
         for (int row = 0; row < 8; ++row) {
             String[] rankLabels = {"1", "2", "3", "4", "5", "6", "7", "8"};
-            JLabel label = new JLabel(rankLabels[7-row], SwingConstants.CENTER);
+            JLabel label = new JLabel(rankLabels[7 - row], SwingConstants.CENTER);
             rankLabelsPanel.add(label);
         }
 
