@@ -2,8 +2,13 @@ package ru.hse.reversi.GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.URL;
 
 public class BoardGUI extends JFrame {
+    JButton[][] squares = new JButton[8][8];
+    boolean[][] buttonPressed = new boolean[8][8];
 
     public BoardGUI() {
         // create a window
@@ -22,14 +27,14 @@ public class BoardGUI extends JFrame {
         // create buttons
         for (int row = 0; row < 8; ++row) {
             for (int col = 0; col < 8; ++col) {
-                JButton[][] squares = new JButton[8][8];
-                squares[row][col] = new JButton();
+                JButton button = new JButton();
+                squares[row][col] = button;
+                squares[row][col].addActionListener(buttonListener);
+                button.putClientProperty("x", row);
+                button.putClientProperty("y", col);
+                buttonPressed[row][col] = false;
                 squares[row][col].setOpaque(true);
-                if ((row + col) % 2 == 0) {
-                    squares[row][col].setBackground(Color.GRAY);
-                } else {
-                    squares[row][col].setBackground(Color.WHITE);
-                }
+                squares[row][col].setBackground(Color.GREEN.darker());
                 board.add(squares[row][col]);
             }
         }
@@ -55,4 +60,34 @@ public class BoardGUI extends JFrame {
         add(rankLabelsPanel, BorderLayout.WEST);
         add(board, BorderLayout.CENTER);
     }
+
+    int k = 0;
+    ActionListener buttonListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JButton button = (JButton) e.getSource(); // get link to the pushed button
+            // get coordinates of the button
+            int x = (int) button.getClientProperty("x");
+            int y = (int) button.getClientProperty("y");
+            if (!buttonPressed[x][y]) {
+                if (k == 0) {
+                    URL url = getClass().getResource("/resources/black.png");
+                    assert url != null;
+                    ImageIcon icon = new ImageIcon(url);
+                    Image img = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+                    button.setIcon(new ImageIcon(img));
+                    k = 1;
+                } else {
+                    URL url = getClass().getResource("/resources/white.png");
+                    assert url != null;
+                    ImageIcon icon = new ImageIcon(url);
+                    Image img = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+                    button.setIcon(new ImageIcon(img));
+                    k = 0;
+                }
+                System.out.println("Button clicked!");
+                buttonPressed[x][y] = true;
+            }
+        }
+    };
 }

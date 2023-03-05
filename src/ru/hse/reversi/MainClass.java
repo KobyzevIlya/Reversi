@@ -1,6 +1,5 @@
 package ru.hse.reversi;
 
-import ru.hse.reversi.GUI.BoardGUI;
 import ru.hse.reversi.GUI.MainMenu;
 import ru.hse.reversi.game.Reversi;
 

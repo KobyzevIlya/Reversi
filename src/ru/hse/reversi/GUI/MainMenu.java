@@ -1,5 +1,7 @@
 package ru.hse.reversi.GUI;
 
+import ru.hse.reversi.commands.ConsoleCommandGrabber;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -7,6 +9,7 @@ import java.awt.event.*;
 public class MainMenu extends JFrame implements ActionListener {
     private final JButton startButton;
     private final JButton exitButton;
+    public static String action = "";
 
     // draws a window with main menu
     public MainMenu() {
@@ -36,6 +39,9 @@ public class MainMenu extends JFrame implements ActionListener {
             BoardGUI gui = new BoardGUI();
             gui.setVisible(true);
             dispose();
+            /*ConsoleCommandGrabber commandGrabber = new ConsoleCommandGrabber();
+            commandGrabber.getCommand();
+            action = "/s";*/
         } else if (e.getSource() == exitButton) {
             System.out.println("Exit button clicked!");
             System.exit(0);
