@@ -6,8 +6,8 @@ import ru.hse.reversi.game.Reversi;
 
 public class MainClass {
     public static void main(String[] args) {
-        MainMenu menu = new MainMenu();
-        menu.setVisible(true);
+        // MainMenu menu = new MainMenu();
+        // menu.setVisible(true);
         Reversi reversi = new Reversi();
         reversi.startGame();
     }
