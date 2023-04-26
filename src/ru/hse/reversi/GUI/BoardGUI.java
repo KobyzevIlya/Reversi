@@ -71,10 +71,49 @@ public class BoardGUI extends JFrame {
             rankLabelsPanel.add(label);
         }
 
-        // add panels with labels to the main panel
+        // создание кнопок "Отменить ход", "Статистика", "Завершить игру"
+        JButton undoButton = new JButton("Отменить ход");
+        undoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // выполнение действий при нажатии на кнопку "Отменить ход"
+                // ...
+            }
+        });
+
+        JButton statsButton = new JButton("Статистика");
+        statsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // выполнение действий при нажатии на кнопку "Статистика"
+                // ...
+                JOptionPane.showMessageDialog(null, "Текущий счет: "); // нужен счет
+            }
+        });
+
+        JButton quitButton = new JButton("Завершить игру");
+        quitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // выполнение действий при нажатии на кнопку "Завершить игру"
+                // ...
+                JOptionPane.showMessageDialog(null, "Игра окончена. Итоговый счет: "); // нужен счет
+            }
+        });
+
+        // создание панели с кнопками "Отменить ход", "Статистика", "Завершить игру"
+        JPanel actionsPanel = new JPanel(new GridLayout(1, 3));
+        actionsPanel.add(undoButton);
+        actionsPanel.add(statsButton);
+        actionsPanel.add(quitButton);
+
+        // добавление компонентов на главную панель
         add(fileLabelsPanel, BorderLayout.NORTH);
         add(rankLabelsPanel, BorderLayout.WEST);
         add(board, BorderLayout.CENTER);
+        add(actionsPanel, BorderLayout.NORTH);
+
+        setVisible(true);
     }
 
     int k = 0;
@@ -139,6 +178,11 @@ public class BoardGUI extends JFrame {
     private void setPossibleMoves() {
         for (var mv : reversi.getObserver().getPossibleMoves()) {
             squares[mv.getFirst()][mv.getSecond()].setEnabled(true);
+            URL url = getClass().getResource("/resources/red.png");
+            assert url != null;
+            ImageIcon icon = new ImageIcon(url);
+            Image img = icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+            squares[mv.getFirst()][mv.getSecond()].setIcon(new ImageIcon(img));
         }
     }
 }

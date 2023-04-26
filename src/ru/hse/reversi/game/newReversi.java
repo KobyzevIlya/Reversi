@@ -22,7 +22,8 @@ public class newReversi extends TwoPlayerGame {
         field = new Field();
         observer = new Observer(field, getTurn());
 
-        whitePlayer = new Computer(3, this);
+        //whitePlayer = new Computer(3, this);
+        whitePlayer = new Human(null, null);
         blackPlayer = new Human(null, null);
     }
 

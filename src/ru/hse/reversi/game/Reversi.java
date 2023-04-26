@@ -129,7 +129,7 @@ public class Reversi extends TwoPlayerGame {
             }
             case 2, 3 -> {
                 blackPlayer = new Human(commandGrabber, messageHandler);
-                whitePlayer = new Computer(getGameMode(), commandGrabber, messageHandler, this);
+                // whitePlayer = new Computer(getGameMode(), commandGrabber, messageHandler, this);
             }
             case 0 -> {
                 return false;
