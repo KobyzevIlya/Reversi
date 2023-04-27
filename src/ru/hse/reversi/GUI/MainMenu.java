@@ -10,6 +10,7 @@ public class MainMenu extends JFrame implements ActionListener {
     private final JButton startButton;
     private final JButton exitButton;
     public static String action = "";
+    private BoardGUI gui;
 
     // draws a window with main menu
     public MainMenu() {
@@ -31,14 +32,17 @@ public class MainMenu extends JFrame implements ActionListener {
         panel.add(exitButton);
 
         add(panel, BorderLayout.CENTER);
+
+        gui = new BoardGUI();
+        gui.setVisible(false);
     }
 
     // works when we press the button
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startButton) {
-            BoardGUI gui = new BoardGUI();
             gui.setVisible(true);
-            dispose();
+            // dispose();
+            setVisible(false);
             /*ConsoleCommandGrabber commandGrabber = new ConsoleCommandGrabber();
             commandGrabber.getCommand();
             action = "/s";*/

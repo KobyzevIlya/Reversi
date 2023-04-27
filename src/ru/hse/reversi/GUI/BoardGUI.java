@@ -17,6 +17,10 @@ public class BoardGUI extends JFrame {
     JButton[][] squares = new JButton[8][8];
     boolean[][] buttonPressed = new boolean[8][8];
 
+    private JButton undoButton = new JButton("Отменить ход");
+    private JButton statsButton = new JButton("Статистика");
+    private JButton quitButton = new JButton("Завершить игру");
+
     newReversi reversi = new newReversi();
     Field field = reversi.getField();
 
@@ -72,32 +76,47 @@ public class BoardGUI extends JFrame {
         }
 
         // создание кнопок "Отменить ход", "Статистика", "Завершить игру"
-        JButton undoButton = new JButton("Отменить ход");
         undoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // выполнение действий при нажатии на кнопку "Отменить ход"
                 // ...
+                if (!reversi.isFieldsHistoryEmpty()) {
+                    reversi.setField(reversi.popLastFieldFromHistory());
+                    reversi.setTurn(!reversi.getTurn());
+                    reversi.newObserver();
+                    field = reversi.getField();
+                    disableAndSetButtons();
+                    setPossibleMoves();
+                }
             }
         });
 
-        JButton statsButton = new JButton("Статистика");
         statsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // выполнение действий при нажатии на кнопку "Статистика"
                 // ...
-                JOptionPane.showMessageDialog(null, "Текущий счет: "); // нужен счет
+                IntegerPair score = reversi.getObserver().getScore();
+                JOptionPane.showMessageDialog(null, "Черные: " + score.getFirst() + " Белые: " + score.getSecond()); // нужен счет
             }
         });
 
-        JButton quitButton = new JButton("Завершить игру");
         quitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // выполнение действий при нажатии на кнопку "Завершить игру"
                 // ...
-                JOptionPane.showMessageDialog(null, "Игра окончена. Итоговый счет: "); // нужен счет
+                IntegerPair score = reversi.getObserver().getScore();
+                reversi.setBestScore(Math.max(Math.max(score.getFirst(), score.getSecond()), reversi.getBestScore()));
+                JOptionPane.showMessageDialog(null, "Игра окончена.\nИтоговый счет: " + 
+                    "Черные: " + score.getFirst() + " Белые: " + score.getSecond() + "\n"+
+                    "Лучший счет: " + reversi.getBestScore()); // нужен счет
+
+                    reversi = new newReversi(reversi.getBestScore());
+                    field = reversi.getField();
+                    disableAndSetButtons();
+                    setPossibleMoves();
             }
         });
 
@@ -120,6 +139,9 @@ public class BoardGUI extends JFrame {
     ActionListener buttonListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+            reversi.addFieldToHistory(new Field(reversi.getField()));
+            // ConsolePrinter.printField(field); // DEBUG
+
             JButton button = (JButton) e.getSource(); // get link to the pushed button
             // get coordinates of the button
             int x = (int) button.getClientProperty("x");
@@ -129,7 +151,7 @@ public class BoardGUI extends JFrame {
             reversi.makeMove(move);
             field = reversi.getField();
 
-            ConsolePrinter.printField(field); // DEBUG
+            // ConsolePrinter.printField(field); // DEBUG
 
             disableAndSetButtons();
 
@@ -138,12 +160,11 @@ public class BoardGUI extends JFrame {
                 field = reversi.getField();
                 disableAndSetButtons();
             }
-            ConsolePrinter.printField(field); // DEBUG
+            // ConsolePrinter.printField(field); // DEBUG
             setPossibleMoves();
 
             if (reversi.getObserver().isEndOfGame()) {
-                System.out.println("Thats all");
-                System.exit(0);
+                quitButton.doClick();
             }
         }
     };
