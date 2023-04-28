@@ -50,12 +50,24 @@ public class MainMenu extends JFrame implements ActionListener {
     // works when we press the button
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == pvpButton) {
+            gui.createGame("Human", gui.getBestScore());
+            gui.setMainMenu(this);
             gui.setVisible(true);
             // dispose();
             setVisible(false);
             /*ConsoleCommandGrabber commandGrabber = new ConsoleCommandGrabber();
             commandGrabber.getCommand();
             action = "/s";*/
+        } else if (e.getSource() == pvcEasyButton) {
+            gui.createGame("Easy", gui.getBestScore());
+            gui.setMainMenu(this);
+            gui.setVisible(true);
+            setVisible(false);
+        } else if (e.getSource() == pvcHardButton) {
+            gui.createGame("Hard", gui.getBestScore());
+            gui.setMainMenu(this);
+            gui.setVisible(true);
+            setVisible(false);
         } else if (e.getSource() == exitButton) {
             System.out.println("Exit button clicked!");
             System.exit(0);

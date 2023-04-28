@@ -21,8 +21,10 @@ public class BoardGUI extends JFrame {
     private JButton statsButton = new JButton("Статистика");
     private JButton quitButton = new JButton("Завершить игру");
 
-    newReversi reversi = new newReversi();
-    Field field = reversi.getField();
+    private newReversi reversi;
+    private Field field;
+
+    private MainMenu mainMenu;
 
     public BoardGUI() {
         // create a window
@@ -56,8 +58,8 @@ public class BoardGUI extends JFrame {
             }
         }
 
-        disableAndSetButtons();
-        setPossibleMoves();
+        // disableAndSetButtons();
+        // setPossibleMoves();
 
         // create labels A-H
         JPanel fileLabelsPanel = new JPanel(new GridLayout(1, 8));
@@ -84,6 +86,12 @@ public class BoardGUI extends JFrame {
                 if (!reversi.isFieldsHistoryEmpty()) {
                     reversi.setField(reversi.popLastFieldFromHistory());
                     reversi.setTurn(!reversi.getTurn());
+
+                    if (reversi.getGameMode() == "Easy" || reversi.getGameMode() == "Hard") {
+                        reversi.setField(reversi.popLastFieldFromHistory());
+                        reversi.setTurn(!reversi.getTurn());
+                    }
+
                     reversi.newObserver();
                     field = reversi.getField();
                     disableAndSetButtons();
@@ -113,10 +121,13 @@ public class BoardGUI extends JFrame {
                     "Черные: " + score.getFirst() + " Белые: " + score.getSecond() + "\n"+
                     "Лучший счет: " + reversi.getBestScore()); // нужен счет
 
-                    reversi = new newReversi(reversi.getBestScore());
-                    field = reversi.getField();
-                    disableAndSetButtons();
-                    setPossibleMoves();
+                    // reversi = new newReversi(reversi.getGameMode(), reversi.getBestScore());
+                    // field = reversi.getField();
+                    // disableAndSetButtons();
+                    // setPossibleMoves();
+
+                    setVisible(false);
+                    mainMenu.setVisible(true);
             }
         });
 
@@ -157,6 +168,7 @@ public class BoardGUI extends JFrame {
 
             if (reversi.isCurrentComputer() || reversi.getObserver().getPossibleMoves().isEmpty()) {
                 reversi.makeComputerMove();
+                reversi.addFieldToHistory(new Field(reversi.getField()));
                 field = reversi.getField();
                 disableAndSetButtons();
             }
@@ -168,6 +180,18 @@ public class BoardGUI extends JFrame {
             }
         }
     };
+
+    public void createGame(String gameMode, int bestScore) {
+        reversi = new newReversi(gameMode, bestScore);
+        field = reversi.getField();
+
+        disableAndSetButtons();
+        setPossibleMoves();
+    }
+
+    public void setMainMenu(MainMenu mainMenu) {
+        this.mainMenu = mainMenu;
+    }
 
     private void disableAndSetButtons() {
         for (int row = 0; row < 8; ++row) {
@@ -205,5 +229,12 @@ public class BoardGUI extends JFrame {
             Image img = icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
             squares[mv.getFirst()][mv.getSecond()].setIcon(new ImageIcon(img));
         }
+    }
+
+    public int getBestScore() {
+        if (reversi != null) {
+            return reversi.getBestScore();
+        } 
+        return 0;
     }
 }

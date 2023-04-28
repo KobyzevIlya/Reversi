@@ -22,18 +22,30 @@ public class newReversi extends TwoPlayerGame {
     private Player whitePlayer; // only white player may be Computer
     private Player blackPlayer;
 
-    public newReversi() {
+    private String gameMode;
+
+    public newReversi(String gameMode) {
         field = new Field();
         observer = new Observer(field, getTurn());
         fields = new ArrayDeque<>();
 
-        //whitePlayer = new Computer(3, this);
-        whitePlayer = new Human(null, null);
-        blackPlayer = new Human(null, null);
+        if (gameMode == "Human") {
+            whitePlayer = new Human(null, null);
+            blackPlayer = new Human(null, null);
+            this.gameMode = gameMode;
+        } else if (gameMode == "Easy") {
+            whitePlayer = new Computer(2, this);
+            blackPlayer = new Human(null, null);
+            this.gameMode = gameMode;
+        } else if (gameMode == "Hard") {
+            whitePlayer = new Computer(3, this);
+            blackPlayer = new Human(null, null);
+            this.gameMode = gameMode;
+        }
     }
 
-    public newReversi(int bestScore) {
-        this();
+    public newReversi(String gameMode, int bestScore) {
+        this(gameMode);
         setBestScore(bestScore);
     }
 
@@ -87,5 +99,9 @@ public class newReversi extends TwoPlayerGame {
 
     public boolean isFieldsHistoryEmpty() {
         return fields.isEmpty();
+    }
+
+    public String getGameMode() {
+        return gameMode;
     }
 }
