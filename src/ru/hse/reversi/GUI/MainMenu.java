@@ -7,8 +7,10 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class MainMenu extends JFrame implements ActionListener {
-    private final JButton startButton;
     private final JButton exitButton;
+    private final JButton pvcEasyButton;
+    private final JButton pvcHardButton;
+    private final JButton pvpButton;
     public static String action = "";
     private BoardGUI gui;
 
@@ -20,15 +22,23 @@ public class MainMenu extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        startButton = new JButton("Start");
-        startButton.addActionListener(this);
+        pvcEasyButton = new JButton("PVC (easy)");
+        pvcEasyButton.addActionListener(this);
+
+        pvcHardButton = new JButton("PVC (hard)");
+        pvcHardButton.addActionListener(this);
+
+        pvpButton = new JButton("PVP");
+        pvpButton.addActionListener(this);
 
         exitButton = new JButton("Exit");
         exitButton.addActionListener(this);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2, 1));
-        panel.add(startButton);
+        panel.setLayout(new GridLayout(4, 1));
+        panel.add(pvcEasyButton);
+        panel.add(pvcHardButton);
+        panel.add(pvpButton);
         panel.add(exitButton);
 
         add(panel, BorderLayout.CENTER);
@@ -39,7 +49,7 @@ public class MainMenu extends JFrame implements ActionListener {
 
     // works when we press the button
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == startButton) {
+        if (e.getSource() == pvpButton) {
             gui.setVisible(true);
             // dispose();
             setVisible(false);
