@@ -4,6 +4,8 @@ import javax.swing.*;
 
 import ru.hse.reversi.console.ConsolePrinter;
 import ru.hse.reversi.field.Field;
+import ru.hse.reversi.game.Reversi;
+import ru.hse.reversi.game.TwoPlayerGame;
 import ru.hse.reversi.game.newReversi;
 import ru.hse.reversi.utility.FiledSymbols;
 import ru.hse.reversi.utility.IntegerPair;
@@ -132,16 +134,21 @@ public class BoardGUI extends JFrame {
         });
 
         // создание панели с кнопками "Отменить ход", "Статистика", "Завершить игру"
-        JPanel actionsPanel = new JPanel(new GridLayout(1, 3));
+        JPanel actionsPanel = new JPanel(new GridLayout(3, 1));
         actionsPanel.add(undoButton);
         actionsPanel.add(statsButton);
         actionsPanel.add(quitButton);
 
+        // вот тут нужно добавить изменение хода
+        JLabel turn = new JLabel("Сейчас ход черных");
+        turn.setHorizontalAlignment(JLabel.CENTER);
+
         // добавление компонентов на главную панель
-        add(fileLabelsPanel, BorderLayout.NORTH);
+        add(fileLabelsPanel, BorderLayout.SOUTH);
         add(rankLabelsPanel, BorderLayout.WEST);
         add(board, BorderLayout.CENTER);
-        add(actionsPanel, BorderLayout.NORTH);
+        add(actionsPanel, BorderLayout.EAST);
+        add(turn, BorderLayout.NORTH);
 
         setVisible(true);
     }
