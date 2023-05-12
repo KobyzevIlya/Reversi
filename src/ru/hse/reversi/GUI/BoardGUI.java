@@ -29,7 +29,6 @@ public class BoardGUI extends JFrame {
     private MainMenu mainMenu;
 
     public BoardGUI() {
-        // create a window
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Reversi");
         Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -64,12 +63,13 @@ public class BoardGUI extends JFrame {
         // setPossibleMoves();
 
         // create labels A-H
-        JPanel fileLabelsPanel = new JPanel(new GridLayout(1, 8));
+        JPanel fileLabelsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 44, 10));
+        String[] fileLabels = { "A", "B", "C", "D", "E", "F", "G", "H" };
         for (int col = 0; col < 8; ++col) {
-            String[] fileLabels = { "A", "B", "C", "D", "E", "F", "G", "H" };
             JLabel label = new JLabel(fileLabels[col], SwingConstants.CENTER);
-            fileLabelsPanel.add(label, BorderLayout.SOUTH);
+            fileLabelsPanel.add(label); // добавляем метку на панель
         }
+
 
         // create labels 1-8
         JPanel rankLabelsPanel = new JPanel(new GridLayout(8, 1));
@@ -84,7 +84,6 @@ public class BoardGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // выполнение действий при нажатии на кнопку "Отменить ход"
-                // ...
                 if (!reversi.isFieldsHistoryEmpty()) {
                     reversi.setField(reversi.popLastFieldFromHistory());
                     reversi.setTurn(!reversi.getTurn());
@@ -106,7 +105,6 @@ public class BoardGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // выполнение действий при нажатии на кнопку "Статистика"
-                // ...
                 IntegerPair score = reversi.getObserver().getScore();
                 JOptionPane.showMessageDialog(null, "Черные: " + score.getFirst() + " Белые: " + score.getSecond()); // нужен счет
             }
@@ -116,7 +114,6 @@ public class BoardGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // выполнение действий при нажатии на кнопку "Завершить игру"
-                // ...
                 IntegerPair score = reversi.getObserver().getScore();
                 reversi.setBestScore(Math.max(Math.max(score.getFirst(), score.getSecond()), reversi.getBestScore()));
                 JOptionPane.showMessageDialog(null, "Игра окончена.\nИтоговый счет: " + 
@@ -158,18 +155,14 @@ public class BoardGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             reversi.addFieldToHistory(new Field(reversi.getField()));
-            // ConsolePrinter.printField(field); // DEBUG
 
             JButton button = (JButton) e.getSource(); // get link to the pushed button
-            // get coordinates of the button
             int x = (int) button.getClientProperty("x");
             int y = (int) button.getClientProperty("y");
 
             IntegerPair move = new IntegerPair(x, y);
             reversi.makeMove(move);
             field = reversi.getField();
-
-            // ConsolePrinter.printField(field); // DEBUG
 
             disableAndSetButtons();
 
@@ -179,7 +172,6 @@ public class BoardGUI extends JFrame {
                 field = reversi.getField();
                 disableAndSetButtons();
             }
-            // ConsolePrinter.printField(field); // DEBUG
             setPossibleMoves();
 
             if (reversi.getObserver().isEndOfGame()) {

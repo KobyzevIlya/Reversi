@@ -40,7 +40,6 @@ public class MainMenu extends JFrame implements ActionListener {
         panel.add(pvcHardButton);
         panel.add(pvpButton);
         panel.add(exitButton);
-
         add(panel, BorderLayout.CENTER);
 
         gui = new BoardGUI();
@@ -53,11 +52,7 @@ public class MainMenu extends JFrame implements ActionListener {
             gui.createGame("Human", gui.getBestScore());
             gui.setMainMenu(this);
             gui.setVisible(true);
-            // dispose();
             setVisible(false);
-            /*ConsoleCommandGrabber commandGrabber = new ConsoleCommandGrabber();
-            commandGrabber.getCommand();
-            action = "/s";*/
         } else if (e.getSource() == pvcEasyButton) {
             gui.createGame("Easy", gui.getBestScore());
             gui.setMainMenu(this);
