@@ -22,6 +22,7 @@ public class BoardGUI extends JFrame {
     private JButton undoButton = new JButton("Отменить ход");
     private JButton statsButton = new JButton("Статистика");
     private JButton quitButton = new JButton("Завершить игру");
+    private JLabel turnInfo;
 
     private newReversi reversi;
     private Field field;
@@ -96,6 +97,7 @@ public class BoardGUI extends JFrame {
                     reversi.newObserver();
                     field = reversi.getField();
                     disableAndSetButtons();
+                    changeTurnInfo();
                     setPossibleMoves();
                 }
             }
@@ -137,15 +139,15 @@ public class BoardGUI extends JFrame {
         actionsPanel.add(quitButton);
 
         // вот тут нужно добавить изменение хода
-        JLabel turn = new JLabel("Сейчас ход черных");
-        turn.setHorizontalAlignment(JLabel.CENTER);
+        turnInfo = new JLabel();
+        turnInfo.setHorizontalAlignment(JLabel.CENTER);
 
         // добавление компонентов на главную панель
         add(fileLabelsPanel, BorderLayout.SOUTH);
         add(rankLabelsPanel, BorderLayout.WEST);
         add(board, BorderLayout.CENTER);
         add(actionsPanel, BorderLayout.EAST);
-        add(turn, BorderLayout.NORTH);
+        add(turnInfo, BorderLayout.NORTH);
 
         setVisible(true);
     }
@@ -165,12 +167,14 @@ public class BoardGUI extends JFrame {
             field = reversi.getField();
 
             disableAndSetButtons();
+            changeTurnInfo();
 
             if (reversi.isCurrentComputer() || reversi.getObserver().getPossibleMoves().isEmpty()) {
                 reversi.makeComputerMove();
                 reversi.addFieldToHistory(new Field(reversi.getField()));
                 field = reversi.getField();
                 disableAndSetButtons();
+                changeTurnInfo();
             }
             setPossibleMoves();
 
@@ -184,6 +188,7 @@ public class BoardGUI extends JFrame {
         reversi = new newReversi(gameMode, bestScore);
         field = reversi.getField();
 
+        changeTurnInfo();
         disableAndSetButtons();
         setPossibleMoves();
     }
@@ -235,5 +240,10 @@ public class BoardGUI extends JFrame {
             return reversi.getBestScore();
         } 
         return 0;
+    }
+
+    private void changeTurnInfo() {
+        String text = reversi.getTurn() ? "Сейчас ход черных" : "Сейчас ход белых";
+        turnInfo.setText(text);
     }
 }
