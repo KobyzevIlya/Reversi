@@ -2,10 +2,7 @@ package ru.hse.reversi.GUI;
 
 import javax.swing.*;
 
-import ru.hse.reversi.console.ConsolePrinter;
 import ru.hse.reversi.field.Field;
-import ru.hse.reversi.game.Reversi;
-import ru.hse.reversi.game.TwoPlayerGame;
 import ru.hse.reversi.game.newReversi;
 import ru.hse.reversi.utility.FiledSymbols;
 import ru.hse.reversi.utility.IntegerPair;
@@ -14,21 +11,21 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
+import java.util.Objects;
 
 public class BoardGUI extends JFrame {
     JButton[][] squares = new JButton[8][8];
-    boolean[][] buttonPressed = new boolean[8][8];
 
-    private JButton undoButton = new JButton("Отменить ход");
-    private JButton statsButton = new JButton("Статистика");
-    private JButton quitButton = new JButton("Завершить игру");
-    private JLabel turnInfo;
+    private final JButton quitButton = new JButton("Завершить игру");
+    private final JLabel turnInfo;
 
     private newReversi reversi;
     private Field field;
-
     private MainMenu mainMenu;
 
+    /**
+     * Constructs a new BoardGUI with the default settings.
+     */
     public BoardGUI() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Reversi");
@@ -60,15 +57,12 @@ public class BoardGUI extends JFrame {
             }
         }
 
-        // disableAndSetButtons();
-        // setPossibleMoves();
-
         // create labels A-H
         JPanel fileLabelsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 44, 10));
         String[] fileLabels = { "A", "B", "C", "D", "E", "F", "G", "H" };
         for (int col = 0; col < 8; ++col) {
             JLabel label = new JLabel(fileLabels[col], SwingConstants.CENTER);
-            fileLabelsPanel.add(label); // добавляем метку на панель
+            fileLabelsPanel.add(label);
         }
 
 
@@ -80,16 +74,20 @@ public class BoardGUI extends JFrame {
             rankLabelsPanel.add(label);
         }
 
-        // создание кнопок "Отменить ход", "Статистика", "Завершить игру"
+        // create the undo, stats, and quit buttons
+        JButton undoButton = new JButton("Отменить ход");
         undoButton.addActionListener(new ActionListener() {
+            /**
+             * The actions performed when the Undo button is pressed
+             * @param e the event to be processed
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
-                // выполнение действий при нажатии на кнопку "Отменить ход"
                 if (!reversi.isFieldsHistoryEmpty()) {
                     reversi.setField(reversi.popLastFieldFromHistory());
                     reversi.setTurn(!reversi.getTurn());
 
-                    if (reversi.getGameMode() == "Easy" || reversi.getGameMode() == "Hard") {
+                    if (Objects.equals(reversi.getGameMode(), "Easy") || Objects.equals(reversi.getGameMode(), "Hard")) {
                         reversi.setField(reversi.popLastFieldFromHistory());
                         reversi.setTurn(!reversi.getTurn());
                     }
@@ -103,46 +101,47 @@ public class BoardGUI extends JFrame {
             }
         });
 
+        JButton statsButton = new JButton("Статистика");
         statsButton.addActionListener(new ActionListener() {
+            /**
+             * The actions performed when the statsButton button is pressed
+             * @param e the event to be processed
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
-                // выполнение действий при нажатии на кнопку "Статистика"
                 IntegerPair score = reversi.getObserver().getScore();
-                JOptionPane.showMessageDialog(null, "Черные: " + score.getFirst() + " Белые: " + score.getSecond()); // нужен счет
+                JOptionPane.showMessageDialog(null, "Черные: " + score.getFirst() + " Белые: " + score.getSecond());
             }
         });
 
         quitButton.addActionListener(new ActionListener() {
+            /**
+             * The actions performed when the quitButton button is pressed
+             * @param e the event to be processed
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
-                // выполнение действий при нажатии на кнопку "Завершить игру"
                 IntegerPair score = reversi.getObserver().getScore();
                 reversi.setBestScore(Math.max(Math.max(score.getFirst(), score.getSecond()), reversi.getBestScore()));
                 JOptionPane.showMessageDialog(null, "Игра окончена.\nИтоговый счет: " + 
                     "Черные: " + score.getFirst() + " Белые: " + score.getSecond() + "\n"+
-                    "Лучший счет: " + reversi.getBestScore()); // нужен счет
-
-                    // reversi = new newReversi(reversi.getGameMode(), reversi.getBestScore());
-                    // field = reversi.getField();
-                    // disableAndSetButtons();
-                    // setPossibleMoves();
+                    "Лучший счет: " + reversi.getBestScore());
 
                     setVisible(false);
                     mainMenu.setVisible(true);
             }
         });
 
-        // создание панели с кнопками "Отменить ход", "Статистика", "Завершить игру"
+        // create a panel for turn information
         JPanel actionsPanel = new JPanel(new GridLayout(3, 1));
         actionsPanel.add(undoButton);
         actionsPanel.add(statsButton);
         actionsPanel.add(quitButton);
 
-        // вот тут нужно добавить изменение хода
         turnInfo = new JLabel();
         turnInfo.setHorizontalAlignment(JLabel.CENTER);
 
-        // добавление компонентов на главную панель
+        // add all components to the frame
         add(fileLabelsPanel, BorderLayout.SOUTH);
         add(rankLabelsPanel, BorderLayout.WEST);
         add(board, BorderLayout.CENTER);
@@ -152,8 +151,12 @@ public class BoardGUI extends JFrame {
         setVisible(true);
     }
 
-    int k = 0;
     ActionListener buttonListener = new ActionListener() {
+        /**
+         * Called when the button is clicked.
+         * Updates the game field with the new move, disables buttons, changes turn info, and makes computer move if necessary.
+         * @param e the event to be processed
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             reversi.addFieldToHistory(new Field(reversi.getField()));
@@ -184,6 +187,11 @@ public class BoardGUI extends JFrame {
         }
     };
 
+    /**
+     * Creates a new game with the specified game mode and best score.
+     * @param gameMode String representing the game mode to be played (either "PVP" or "PVC").
+     * @param bestScore int representing the best score achieved in this game mode.
+     */
     public void createGame(String gameMode, int bestScore) {
         reversi = new newReversi(gameMode, bestScore);
         field = reversi.getField();
@@ -193,10 +201,17 @@ public class BoardGUI extends JFrame {
         setPossibleMoves();
     }
 
+    /**
+     * Sets the main menu for this Reversi game.
+     * @param mainMenu MainMenu object representing the main menu.
+     */
     public void setMainMenu(MainMenu mainMenu) {
         this.mainMenu = mainMenu;
     }
 
+    /**
+     * Disables all buttons and sets their icons based on the current field.
+     */
     private void disableAndSetButtons() {
         for (int row = 0; row < 8; ++row) {
             for (int col = 0; col < 8; ++col) {
@@ -224,6 +239,9 @@ public class BoardGUI extends JFrame {
         }
     }
 
+    /**
+     * Sets the possible moves on the game board by enabling buttons and setting the icon for the move.
+     */
     private void setPossibleMoves() {
         for (var mv : reversi.getObserver().getPossibleMoves()) {
             squares[mv.getFirst()][mv.getSecond()].setEnabled(true);
@@ -235,6 +253,10 @@ public class BoardGUI extends JFrame {
         }
     }
 
+    /**
+     * Returns the best score of the current game.
+     * @return The best score of the current game, or 0 if the game has not been created.
+     */
     public int getBestScore() {
         if (reversi != null) {
             return reversi.getBestScore();
@@ -242,6 +264,9 @@ public class BoardGUI extends JFrame {
         return 0;
     }
 
+    /**
+     * Changes the turn information displayed on the GUI according to the current player turn.
+     */
     private void changeTurnInfo() {
         String text = reversi.getTurn() ? "Сейчас ход черных" : "Сейчас ход белых";
         turnInfo.setText(text);

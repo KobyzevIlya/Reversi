@@ -1,7 +1,5 @@
 package ru.hse.reversi.GUI;
 
-import ru.hse.reversi.commands.ConsoleCommandGrabber;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -11,10 +9,11 @@ public class MainMenu extends JFrame implements ActionListener {
     private final JButton pvcEasyButton;
     private final JButton pvcHardButton;
     private final JButton pvpButton;
-    public static String action = "";
-    private BoardGUI gui;
+    private final BoardGUI gui;
 
-    // draws a window with main menu
+    /**
+     * Constructs a new MainMenu object that draws a window with the main menu.
+     */
     public MainMenu() {
         setTitle("Main menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,7 +45,10 @@ public class MainMenu extends JFrame implements ActionListener {
         gui.setVisible(false);
     }
 
-    // works when we press the button
+    /**
+     * Handles the action event when a button is pressed.
+     * @param e the event that occurred
+     */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == pvpButton) {
             gui.createGame("Human", gui.getBestScore());
