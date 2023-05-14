@@ -2,13 +2,9 @@ package ru.hse.reversi.game;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.concurrent.TimeUnit;
 
-import ru.hse.reversi.console.ConsolePrinter;
 import ru.hse.reversi.field.Field;
-import ru.hse.reversi.game.Observer;
 import ru.hse.reversi.players.Computer;
-import ru.hse.reversi.players.Human;
 import ru.hse.reversi.players.Player;
 import ru.hse.reversi.utility.FiledSymbols;
 import ru.hse.reversi.utility.IntegerPair;
@@ -20,7 +16,6 @@ public class newReversi extends TwoPlayerGame {
     private Deque<Field> fields;
     
     private Player whitePlayer; // only white player may be Computer
-    private Player blackPlayer;
 
     private String gameMode;
 
@@ -30,16 +25,12 @@ public class newReversi extends TwoPlayerGame {
         fields = new ArrayDeque<>();
 
         if (gameMode == "Human") {
-            whitePlayer = new Human(null, null);
-            blackPlayer = new Human(null, null);
             this.gameMode = gameMode;
         } else if (gameMode == "Easy") {
             whitePlayer = new Computer(2, this);
-            blackPlayer = new Human(null, null);
             this.gameMode = gameMode;
         } else if (gameMode == "Hard") {
             whitePlayer = new Computer(3, this);
-            blackPlayer = new Human(null, null);
             this.gameMode = gameMode;
         }
     }

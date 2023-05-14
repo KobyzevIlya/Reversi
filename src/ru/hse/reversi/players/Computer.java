@@ -1,10 +1,8 @@
 package ru.hse.reversi.players;
 
-import ru.hse.reversi.commands.CommandGrabber;
 import ru.hse.reversi.field.Field;
 import ru.hse.reversi.game.Observer;
 import ru.hse.reversi.game.newReversi;
-import ru.hse.reversi.messages.MessageHandler;
 import ru.hse.reversi.utility.FiledSymbols;
 import ru.hse.reversi.utility.IntegerPair;
 
