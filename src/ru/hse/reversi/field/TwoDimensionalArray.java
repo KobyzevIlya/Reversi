@@ -2,11 +2,15 @@ package ru.hse.reversi.field;
 
 import java.util.Objects;
 
+/**
+ * An abstract class representing a two-dimensional array.
+ *
+ * @param <T> the type of objects contained in the array
+ */
 public abstract class TwoDimensionalArray<T> {
     private final int rowsCount;
     private final int columnsCount;
     T[][] body;
-
 
     protected TwoDimensionalArray(int rows, int columns) {
         body = null;
