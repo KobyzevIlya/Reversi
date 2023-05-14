@@ -21,6 +21,10 @@ public class Field {
         fieldBody.setElementAt(4, 4, FiledSymbols.WHITE);
     }
 
+    public Field(Field otherField) {
+        fieldBody = otherField.getField().clone();
+    }
+
     public CharMatrix getField() {
         return fieldBody.clone();
     }

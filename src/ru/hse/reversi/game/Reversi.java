@@ -2,7 +2,7 @@ package ru.hse.reversi.game;
 
 import ru.hse.reversi.commands.Command;
 import ru.hse.reversi.commands.CommandGrabber;
-import ru.hse.reversi.commands.ConsoleCommandGrabber;
+import ru.hse.reversi.commands.GUICommandGrabber;
 import ru.hse.reversi.field.CharMatrix;
 import ru.hse.reversi.field.Field;
 import ru.hse.reversi.messages.ConsoleMessageHandler;
@@ -28,7 +28,7 @@ public class Reversi extends TwoPlayerGame {
     private Player whitePlayer;
 
     public Reversi() {
-        commandGrabber = new ConsoleCommandGrabber();
+        commandGrabber = new GUICommandGrabber();
         messageHandler = new ConsoleMessageHandler();
     }
 
@@ -129,7 +129,7 @@ public class Reversi extends TwoPlayerGame {
             }
             case 2, 3 -> {
                 blackPlayer = new Human(commandGrabber, messageHandler);
-                whitePlayer = new Computer(getGameMode(), commandGrabber, messageHandler, this);
+                // whitePlayer = new Computer(getGameMode(), commandGrabber, messageHandler, this);
             }
             case 0 -> {
                 return false;

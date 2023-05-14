@@ -3,7 +3,7 @@ package ru.hse.reversi.players;
 import ru.hse.reversi.commands.CommandGrabber;
 import ru.hse.reversi.field.Field;
 import ru.hse.reversi.game.Observer;
-import ru.hse.reversi.game.Reversi;
+import ru.hse.reversi.game.newReversi;
 import ru.hse.reversi.messages.MessageHandler;
 import ru.hse.reversi.utility.FiledSymbols;
 import ru.hse.reversi.utility.IntegerPair;
@@ -12,14 +12,10 @@ import java.util.ArrayList;
 
 public class Computer implements Player {
     private final int mode;
-    private final CommandGrabber commandGrabber;
-    private final MessageHandler messageHandler;
-    private final Reversi game;
+    private final newReversi game;
 
-    public Computer(int gameMode, CommandGrabber commandGrabber, MessageHandler messageHandler, Reversi game) {
-        this.mode = gameMode;
-        this.commandGrabber = commandGrabber;
-        this.messageHandler = messageHandler;
+    public Computer(int gameMode, newReversi game) {
+        this.mode = gameMode; // 2 - normal, 3 - hards
         this.game = game;
     }
 
@@ -45,7 +41,6 @@ public class Computer implements Player {
             }
         }
 
-        messageHandler.chosenLetter((char) ('a' + possibleMoves.indexOf(move)));
         return move;
     }
 
@@ -82,7 +77,6 @@ public class Computer implements Player {
             game.setTurn(!game.getTurn());
         }
 
-        messageHandler.chosenLetter((char) ('a' + possibleMoves.indexOf(move)));
         return move;
     }
 }
