@@ -21,16 +21,16 @@ public class MainMenu extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        pvcEasyButton = new JButton("PVC (easy)");
+        pvcEasyButton = new JButton("Компьютер (легкий)");
         pvcEasyButton.addActionListener(this);
 
-        pvcHardButton = new JButton("PVC (hard)");
+        pvcHardButton = new JButton("Компьютер (сложный)");
         pvcHardButton.addActionListener(this);
 
-        pvpButton = new JButton("PVP");
+        pvpButton = new JButton("Игрок против игрока");
         pvpButton.addActionListener(this);
 
-        exitButton = new JButton("Exit");
+        exitButton = new JButton("Выход");
         exitButton.addActionListener(this);
 
         JPanel panel = new JPanel();

@@ -3,7 +3,7 @@ package ru.hse.reversi.GUI;
 import javax.swing.*;
 
 import ru.hse.reversi.field.Field;
-import ru.hse.reversi.game.newReversi;
+import ru.hse.reversi.game.Reversi;
 import ru.hse.reversi.utility.FiledSymbols;
 import ru.hse.reversi.utility.IntegerPair;
 
@@ -19,7 +19,7 @@ public class BoardGUI extends JFrame {
     private final JButton quitButton = new JButton("Завершить игру");
     private final JLabel turnInfo;
 
-    private newReversi reversi;
+    private Reversi reversi;
     private Field field;
     private MainMenu mainMenu;
 
@@ -193,7 +193,7 @@ public class BoardGUI extends JFrame {
      * @param bestScore int representing the best score achieved in this game mode.
      */
     public void createGame(String gameMode, int bestScore) {
-        reversi = new newReversi(gameMode, bestScore);
+        reversi = new Reversi(gameMode, bestScore);
         field = reversi.getField();
 
         changeTurnInfo();

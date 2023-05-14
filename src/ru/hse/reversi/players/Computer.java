@@ -2,7 +2,7 @@ package ru.hse.reversi.players;
 
 import ru.hse.reversi.field.Field;
 import ru.hse.reversi.game.Observer;
-import ru.hse.reversi.game.newReversi;
+import ru.hse.reversi.game.Reversi;
 import ru.hse.reversi.utility.FiledSymbols;
 import ru.hse.reversi.utility.IntegerPair;
 
@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 public class Computer implements Player {
     private final int mode;
-    private final newReversi game;
+    private final Reversi game;
 
-    public Computer(int gameMode, newReversi game) {
+    public Computer(int gameMode, Reversi game) {
         this.mode = gameMode; // 2 - normal, 3 - hards
         this.game = game;
     }

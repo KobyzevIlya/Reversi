@@ -9,7 +9,7 @@ import ru.hse.reversi.players.Player;
 import ru.hse.reversi.utility.FiledSymbols;
 import ru.hse.reversi.utility.IntegerPair;
 
-public class newReversi extends TwoPlayerGame {
+public class Reversi extends TwoPlayerGame {
     private Field field;
     private Observer observer;
 
@@ -19,7 +19,7 @@ public class newReversi extends TwoPlayerGame {
 
     private String gameMode;
 
-    public newReversi(String gameMode) {
+    public Reversi(String gameMode) {
         field = new Field();
         observer = new Observer(field, getTurn());
         fields = new ArrayDeque<>();
@@ -35,7 +35,7 @@ public class newReversi extends TwoPlayerGame {
         }
     }
 
-    public newReversi(String gameMode, int bestScore) {
+    public Reversi(String gameMode, int bestScore) {
         this(gameMode);
         setBestScore(bestScore);
     }
