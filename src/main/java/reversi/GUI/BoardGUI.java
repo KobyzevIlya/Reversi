@@ -1,11 +1,11 @@
-package ru.hse.reversi.GUI;
+package reversi.GUI;
 
 import javax.swing.*;
 
-import ru.hse.reversi.field.Field;
-import ru.hse.reversi.game.newReversi;
-import ru.hse.reversi.utility.FiledSymbols;
-import ru.hse.reversi.utility.IntegerPair;
+import reversi.field.Field;
+import reversi.game.Reversi;
+import reversi.utility.FiledSymbols;
+import reversi.utility.IntegerPair;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,7 +19,7 @@ public class BoardGUI extends JFrame {
     private final JButton quitButton = new JButton("Завершить игру");
     private final JLabel turnInfo;
 
-    private newReversi reversi;
+    private Reversi reversi;
     private Field field;
     private MainMenu mainMenu;
 
@@ -178,10 +178,12 @@ public class BoardGUI extends JFrame {
                 field = reversi.getField();
                 disableAndSetButtons();
                 changeTurnInfo();
+
+
             }
             setPossibleMoves();
 
-            if (reversi.getObserver().isEndOfGame()) {
+            if (reversi.getObserver().isEndOfGame() || reversi.getObserver().getPossibleMoves().isEmpty()) {
                 quitButton.doClick();
             }
         }
@@ -193,7 +195,7 @@ public class BoardGUI extends JFrame {
      * @param bestScore int representing the best score achieved in this game mode.
      */
     public void createGame(String gameMode, int bestScore) {
-        reversi = new newReversi(gameMode, bestScore);
+        reversi = new Reversi(gameMode, bestScore);
         field = reversi.getField();
 
         changeTurnInfo();
@@ -201,7 +203,7 @@ public class BoardGUI extends JFrame {
         setPossibleMoves();
     }
 
-    /**
+    /**main
      * Sets the main menu for this Reversi game.
      * @param mainMenu MainMenu object representing the main menu.
      */
@@ -218,14 +220,14 @@ public class BoardGUI extends JFrame {
                 squares[row][col].setEnabled(false);
 
                 if (field.getField().getElementAt(row, col) == FiledSymbols.BLACK) {
-                    URL url = getClass().getResource("/resources/black.png");
+                    URL url = getClass().getResource("/black.png");
                     assert url != null;
                     ImageIcon icon = new ImageIcon(url);
                     Image img = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
                     squares[row][col].setIcon(new ImageIcon(img));
                     squares[row][col].setDisabledIcon(squares[row][col].getIcon());
                 } else if (field.getField().getElementAt(row, col) == FiledSymbols.WHITE) {
-                    URL url = getClass().getResource("/resources/white.png");
+                    URL url = getClass().getResource("/white.png");
                     assert url != null;
                     ImageIcon icon = new ImageIcon(url);
                     Image img = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
@@ -245,7 +247,7 @@ public class BoardGUI extends JFrame {
     private void setPossibleMoves() {
         for (var mv : reversi.getObserver().getPossibleMoves()) {
             squares[mv.getFirst()][mv.getSecond()].setEnabled(true);
-            URL url = getClass().getResource("/resources/red.png");
+            URL url = getClass().getResource("/red.png");
             assert url != null;
             ImageIcon icon = new ImageIcon(url);
             Image img = icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);

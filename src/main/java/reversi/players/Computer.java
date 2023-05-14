@@ -1,24 +1,42 @@
-package ru.hse.reversi.players;
-
-import ru.hse.reversi.commands.CommandGrabber;
-import ru.hse.reversi.field.Field;
-import ru.hse.reversi.game.Observer;
-import ru.hse.reversi.game.newReversi;
-import ru.hse.reversi.messages.MessageHandler;
-import ru.hse.reversi.utility.FiledSymbols;
-import ru.hse.reversi.utility.IntegerPair;
+package reversi.players;
 
 import java.util.ArrayList;
 
+import reversi.field.Field;
+import reversi.game.Observer;
+import reversi.game.Reversi;
+import reversi.utility.FiledSymbols;
+import reversi.utility.IntegerPair;
+
+/**
+ * 
+ * This class represents a computer player for the Reversi game. It implements
+ * the Player interface.
+ */
 public class Computer implements Player {
     private final int mode;
-    private final newReversi game;
+    private final Reversi game;
 
-    public Computer(int gameMode, newReversi game) {
+    /**
+     * 
+     * Creates a new instance of the Computer class.
+     * 
+     * @param gameMode the mode of the game (2 for normal, 3 for hard)
+     * @param game     the instance of the Reversi game
+     */
+    public Computer(int gameMode, Reversi game) {
         this.mode = gameMode; // 2 - normal, 3 - hards
         this.game = game;
     }
 
+    /**
+     * 
+     * This method makes a move for the computer player, based on the current
+     * observer.
+     * 
+     * @param observer the current observer of the game
+     * @return an IntegerPair representing the computer's move
+     */
     @Override
     public IntegerPair makeMove(Observer observer) {
         if (mode == 3) {
@@ -27,6 +45,15 @@ public class Computer implements Player {
         return rookieMove(observer);
     }
 
+    /**
+     * 
+     * This method makes a rookie move for the computer player, based on the current
+     * observer.
+     * 
+     * @param observer the current observer of the game
+     * 
+     * @return an IntegerPair representing the computer's move
+     */
     private IntegerPair rookieMove(Observer observer) {
         ArrayList<IntegerPair> possibleMoves = (ArrayList<IntegerPair>) observer.getPossibleMoves();
 
@@ -44,6 +71,15 @@ public class Computer implements Player {
         return move;
     }
 
+    /**
+     * 
+     * This method makes a professional move for the computer player, based on the
+     * current observer.
+     * 
+     * @param observer the current observer of the game
+     * 
+     * @return an IntegerPair representing the computer's move
+     */
     private IntegerPair professionalMove(Observer observer) {
         ArrayList<IntegerPair> possibleMoves = (ArrayList<IntegerPair>) observer.getPossibleMoves();
 
