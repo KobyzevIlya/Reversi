@@ -1,14 +1,14 @@
-package ru.hse.reversi.game;
-
-import ru.hse.reversi.field.CharMatrix;
-import ru.hse.reversi.field.Field;
-import ru.hse.reversi.utility.FiledSymbols;
-import ru.hse.reversi.utility.IntegerPair;
+package reversi.game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import reversi.field.CharMatrix;
+import reversi.field.Field;
+import reversi.utility.FiledSymbols;
+import reversi.utility.IntegerPair;
 
 /**
  * Class representing an observer for the game board.

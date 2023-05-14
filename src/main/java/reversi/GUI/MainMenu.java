@@ -1,4 +1,4 @@
-package ru.hse.reversi.GUI;
+package reversi.GUI;
 
 import javax.swing.*;
 import java.awt.*;

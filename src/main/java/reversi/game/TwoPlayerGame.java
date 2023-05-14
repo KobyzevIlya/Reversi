@@ -1,4 +1,4 @@
-package ru.hse.reversi.game;
+package reversi.game;
 
 /**
  * Abstract class for two-player games.

@@ -1,4 +1,4 @@
-package ru.hse.reversi.utility;
+package reversi.utility;
 
 /**
  * 

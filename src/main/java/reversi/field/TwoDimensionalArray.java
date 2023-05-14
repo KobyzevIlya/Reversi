@@ -1,4 +1,4 @@
-package ru.hse.reversi.field;
+package reversi.field;
 
 import java.util.Objects;
 

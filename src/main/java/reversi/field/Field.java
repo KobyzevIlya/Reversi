@@ -1,7 +1,7 @@
-package ru.hse.reversi.field;
+package reversi.field;
 
-import ru.hse.reversi.utility.FiledSymbols;
-import ru.hse.reversi.utility.IntegerPair;
+import reversi.utility.FiledSymbols;
+import reversi.utility.IntegerPair;
 
 /**
  * 

@@ -1,12 +1,12 @@
-package ru.hse.reversi.players;
-
-import ru.hse.reversi.field.Field;
-import ru.hse.reversi.game.Observer;
-import ru.hse.reversi.game.Reversi;
-import ru.hse.reversi.utility.FiledSymbols;
-import ru.hse.reversi.utility.IntegerPair;
+package reversi.players;
 
 import java.util.ArrayList;
+
+import reversi.field.Field;
+import reversi.game.Observer;
+import reversi.game.Reversi;
+import reversi.utility.FiledSymbols;
+import reversi.utility.IntegerPair;
 
 /**
  * 

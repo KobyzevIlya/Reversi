@@ -1,4 +1,4 @@
-package ru.hse.reversi.field;
+package reversi.field;
 
 /**
  * A class representing a two-dimensional array of Character objects.

@@ -1,6 +1,6 @@
-package ru.hse.reversi;
+package reversi;
 
-import ru.hse.reversi.GUI.MainMenu;
+import reversi.GUI.MainMenu;
 
 public class MainClass {
     public static void main(String[] args) {

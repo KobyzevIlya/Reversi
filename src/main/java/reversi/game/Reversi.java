@@ -1,13 +1,13 @@
-package ru.hse.reversi.game;
+package reversi.game;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import ru.hse.reversi.field.Field;
-import ru.hse.reversi.players.Computer;
-import ru.hse.reversi.players.Player;
-import ru.hse.reversi.utility.FiledSymbols;
-import ru.hse.reversi.utility.IntegerPair;
+import reversi.field.Field;
+import reversi.players.Computer;
+import reversi.players.Player;
+import reversi.utility.FiledSymbols;
+import reversi.utility.IntegerPair;
 
 /**
  * 

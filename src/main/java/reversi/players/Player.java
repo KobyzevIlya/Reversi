@@ -1,7 +1,7 @@
-package ru.hse.reversi.players;
+package reversi.players;
 
-import ru.hse.reversi.game.Observer;
-import ru.hse.reversi.utility.IntegerPair;
+import reversi.game.Observer;
+import reversi.utility.IntegerPair;
 
 /**
  * 
