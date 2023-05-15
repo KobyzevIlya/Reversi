@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"reversi"},{"l":"reversi.field"},{"l":"reversi.game"},{"l":"reversi.GUI"},{"l":"reversi.players"},{"l":"reversi.utility"}];updateSearchResults();
